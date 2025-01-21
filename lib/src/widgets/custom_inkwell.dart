@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class CustomInkWell extends StatelessWidget {
   final ClickProps clickProps;
   final GestureTapCallback? onTap;
+  final ValueChanged<bool>? onHover;
   final Widget? child;
 
   const CustomInkWell({
     super.key,
     required this.clickProps,
     this.onTap,
+    this.onHover,
     this.child,
   });
 
@@ -24,7 +26,6 @@ class CustomInkWell extends StatelessWidget {
       excludeFromSemantics: clickProps.excludeFromSemantics,
       hoverColor: clickProps.hoverColor,
       mouseCursor: clickProps.mouseCursor,
-      onHover: clickProps.onHover,
       onDoubleTap: clickProps.onDoubleTap,
       onHighlightChanged: clickProps.onHighlightChanged,
       onLongPress: clickProps.onLongPress,
@@ -47,6 +48,7 @@ class CustomInkWell extends StatelessWidget {
       containedInkWell: clickProps.containedInkWell,
       highlightShape: clickProps.highlightShape,
       onTap: onTap,
+      onHover: onHover,
       child: child,
     );
   }
