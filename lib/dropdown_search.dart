@@ -497,7 +497,8 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
     dropdownButtonPressed() => _selectSearchMode();
 
     if (!widget.suffixProps.dropdownButtonProps.isVisible &&
-        !widget.suffixProps.clearButtonProps.isVisible) {
+        !widget.suffixProps.clearButtonProps.isVisible &&
+        widget.decoratorProps.decoration.suffixIcon == null) {
       return null;
     }
 
@@ -506,6 +507,8 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
+        if (widget.decoratorProps.decoration.suffixIcon != null)
+          widget.decoratorProps.decoration.suffixIcon!,
         if (widget.suffixProps.clearButtonProps.isVisible &&
             getSelectedItems.isNotEmpty)
           CustomIconButton(
