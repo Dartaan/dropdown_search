@@ -381,6 +381,7 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
         _itemAsString(getSelectedItem),
         style: _getBaseTextStyle(),
         textAlign: widget.decoratorProps.textAlign,
+        overflow: widget.decoratorProps.overflow,
       );
     }
 

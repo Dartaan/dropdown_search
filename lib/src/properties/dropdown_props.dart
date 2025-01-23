@@ -352,6 +352,7 @@ class DropDownDecoratorProps {
   final TextStyle? baseStyle;
   final TextAlign? textAlign;
   final TextAlignVertical? textAlignVertical;
+  final TextOverflow? overflow;
   final bool expands;
   final bool isHovering;
 
@@ -363,6 +364,7 @@ class DropDownDecoratorProps {
     this.baseStyle,
     this.textAlign,
     this.textAlignVertical,
+    this.overflow,
     this.expands = false,
     this.isHovering = false,
   });
