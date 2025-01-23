@@ -250,12 +250,17 @@ class PopupProps<T> {
         bottomSheetProps = const BottomSheetProps();
 }
 
+enum CheckBoxPosition { start, end }
+
 class PopupPropsMultiSelection<T> extends PopupProps<T> {
   ///called when a new item added on Multi selection mode
   final OnItemAdded<T>? onItemAdded;
 
   ///called when a new item added on Multi selection mode
   final OnItemRemoved<T>? onItemRemoved;
+
+  ///widget used to show checked items in multiSelection mode
+  final CheckBoxPosition checkBoxPosition;
 
   ///widget used to show checked items in multiSelection mode
   final DropdownSearchPopupItemBuilder<T>? checkBoxBuilder;
@@ -298,6 +303,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     this.onItemRemoved,
     this.checkBoxBuilder,
     this.validationBuilder,
+    this.checkBoxPosition = CheckBoxPosition.end,
     this.textDirection = TextDirection.ltr,
   }) : super._();
 
@@ -330,6 +336,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     this.onItemRemoved,
     this.checkBoxBuilder,
     this.validationBuilder,
+    this.checkBoxPosition = CheckBoxPosition.end,
     this.textDirection = TextDirection.ltr,
   }) : super.menu();
 
@@ -366,6 +373,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     this.onItemRemoved,
     this.checkBoxBuilder,
     this.validationBuilder,
+    this.checkBoxPosition = CheckBoxPosition.end,
     this.textDirection = TextDirection.ltr,
   }) : super.dialog();
 
@@ -398,6 +406,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     this.onItemRemoved,
     this.checkBoxBuilder,
     this.validationBuilder,
+    this.checkBoxPosition = CheckBoxPosition.end,
     this.textDirection = TextDirection.ltr,
   }) : super.bottomSheet();
 
@@ -430,6 +439,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     this.onItemRemoved,
     this.checkBoxBuilder,
     this.validationBuilder,
+    this.checkBoxPosition = CheckBoxPosition.end,
     this.textDirection = TextDirection.ltr,
   }) : super.modalBottomSheet();
 
@@ -467,6 +477,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
           onItemAdded: null,
           onItemRemoved: null,
           checkBoxBuilder: null,
+          checkBoxPosition: CheckBoxPosition.end,
           validationBuilder: null,
         );
 }
