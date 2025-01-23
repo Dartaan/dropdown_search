@@ -51,13 +51,19 @@ class MyHomePage extends StatelessWidget {
                 child: DropdownSearch<String>(
                   key: dropDownKey,
                   selectedItem: "Menu",
-                  items: (filter, infiniteScrollProps) =>
-                      ["Menu", "Dialog", "Modal", "BottomSheet"],
+                  items: (filter, infiniteScrollProps) => [
+                    "Menu",
+                    "Dialog",
+                    "Modal",
+                    "BottomSheet",
+                    'verylongdropdownsearchitemverylongdropdownsearchitemverylongdropdownsearchitemverylongdropdownsearchitemverylongdropdownsearchitem'
+                  ],
                   decoratorProps: DropDownDecoratorProps(
                     decoration: InputDecoration(
                       labelText: 'Examples for: ',
                       border: OutlineInputBorder(),
                     ),
+                    overflow: TextOverflow.visible,
                   ),
                   popupProps: PopupProps.menu(
                       fit: FlexFit.loose, constraints: BoxConstraints()),
