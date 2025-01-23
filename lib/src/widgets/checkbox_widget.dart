@@ -13,6 +13,7 @@ class CheckBoxWidget extends StatefulWidget {
   final ValueChanged<bool?>? onChanged;
   final bool interceptCallBacks;
   final TextDirection textDirection;
+  final CheckBoxPosition? checkBoxPosition;
 
   CheckBoxWidget({
     super.key,
@@ -23,6 +24,7 @@ class CheckBoxWidget extends StatefulWidget {
     this.checkBox,
     this.interceptCallBacks = false,
     this.textDirection = TextDirection.ltr,
+    this.checkBoxPosition = CheckBoxPosition.end,
     required this.onChanged,
   });
 
@@ -54,17 +56,21 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
       child: ValueListenableBuilder(
         valueListenable: isCheckedNotifier,
         builder: (ctx, bool v, w) {
+          final layout = widget.layout != null
+              ? Expanded(child: widget.layout!(context, v == true))
+              : SizedBox.shrink();
+          final checkbox = widget.checkBox != null
+              ? widget.checkBox!(context, v == true)
+              : Checkbox(
+                  value: v, onChanged: widget.isDisabled ? null : (b) {});
+          List<Widget> children =
+              widget.checkBoxPosition == CheckBoxPosition.start
+                  ? [checkbox, layout]
+                  : [layout, checkbox];
+
           var w = Row(
             mainAxisSize: MainAxisSize.max,
-            children: [
-              widget.layout != null
-                  ? Expanded(child: widget.layout!(context, v == true))
-                  : SizedBox.shrink(),
-              widget.checkBox != null
-                  ? widget.checkBox!(context, v == true)
-                  : Checkbox(
-                      value: v, onChanged: widget.isDisabled ? null : (b) {}),
-            ],
+            children: children,
           );
 
           if (widget.interceptCallBacks) {

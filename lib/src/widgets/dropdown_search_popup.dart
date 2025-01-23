@@ -487,6 +487,7 @@ class DropdownSearchPopupState<T> extends State<DropdownSearchPopup<T>> {
         isChecked: _isSelectedItem(item),
         isDisabled: _isDisabled(item),
         onChanged: (c) => _handleSelectedItem(item),
+        checkBoxPosition: widget.popupProps.checkBoxPosition,
       );
     } else {
       return CheckBoxWidget(
@@ -497,6 +498,7 @@ class DropdownSearchPopupState<T> extends State<DropdownSearchPopup<T>> {
         isChecked: _isSelectedItem(item),
         isDisabled: _isDisabled(item),
         onChanged: (c) => _handleSelectedItem(item),
+        checkBoxPosition: widget.popupProps.checkBoxPosition,
       );
     }
   }
