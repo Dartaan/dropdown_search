@@ -783,7 +783,11 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
 
   @override
   void dispose() {
-    _popupStateKey.currentState?.closePopup();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _popupStateKey.currentState?.closePopup();
+      }
+    });
     super.dispose();
   }
 
