@@ -111,7 +111,7 @@ class DropdownSearch<T> extends StatefulWidget {
     T item,
     String itemAsString,
     ValueChanged<T> removeItem,
-  )? customItemMultiSelectionMode;
+  )? customItemMultiSelectionModeBuilder;
 
   ///customize the fields the be shown
   final DropdownSearchItemAsString<T>? itemAsString;
@@ -218,7 +218,7 @@ class DropdownSearch<T> extends StatefulWidget {
         onChangedMultiSelection = null,
         onBeforePopupOpeningMultiSelection = null,
         selectedItemsScrollProps = null,
-        customItemMultiSelectionMode = null;
+        customItemMultiSelectionModeBuilder = null;
 
   const DropdownSearch.multiSelection({
     super.key,
@@ -234,7 +234,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.selectedItems = const [],
     this.popupProps = const PopupPropsMultiSelection.menu(),
     this.selectedItemsScrollProps,
-    this.customItemMultiSelectionMode,
+    this.customItemMultiSelectionModeBuilder,
     ValueChanged<List<T>>? onChanged,
     BeforeChangeMultiSelection<T>? onBeforeChange,
     BeforePopupOpeningMultiSelection<T>? onBeforePopupOpening,
@@ -380,10 +380,10 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: getSelectedItems.map((e) {
-              if (widget.customItemMultiSelectionMode == null) {
+              if (widget.customItemMultiSelectionModeBuilder == null) {
                 return defaultItemMultiSelectionMode(e);
               }
-              return widget.customItemMultiSelectionMode!(
+              return widget.customItemMultiSelectionModeBuilder!(
                   e, _itemAsString(e), removeItem);
             }).toList(),
           ),
