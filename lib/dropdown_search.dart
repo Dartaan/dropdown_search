@@ -107,6 +107,12 @@ class DropdownSearch<T> extends StatefulWidget {
   ///```
   final ScrollProps? selectedItemsScrollProps;
 
+  final Widget Function(
+    T item,
+    String itemAsString,
+    ValueChanged<T> removeItem,
+  )? customItemMultiSelectionMode;
+
   ///customize the fields the be shown
   final DropdownSearchItemAsString<T>? itemAsString;
 
@@ -211,7 +217,8 @@ class DropdownSearch<T> extends StatefulWidget {
         onSavedMultiSelection = null,
         onChangedMultiSelection = null,
         onBeforePopupOpeningMultiSelection = null,
-        selectedItemsScrollProps = null;
+        selectedItemsScrollProps = null,
+        customItemMultiSelectionMode = null;
 
   const DropdownSearch.multiSelection({
     super.key,
@@ -227,6 +234,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.selectedItems = const [],
     this.popupProps = const PopupPropsMultiSelection.menu(),
     this.selectedItemsScrollProps,
+    this.customItemMultiSelectionMode,
     ValueChanged<List<T>>? onChanged,
     BeforeChangeMultiSelection<T>? onBeforeChange,
     BeforePopupOpeningMultiSelection<T>? onBeforePopupOpening,
@@ -371,9 +379,13 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
           scrollProps: widget.selectedItemsScrollProps ?? ScrollProps(),
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
-            children: getSelectedItems
-                .map((e) => defaultItemMultiSelectionMode(e))
-                .toList(),
+            children: getSelectedItems.map((e) {
+              if (widget.customItemMultiSelectionMode == null) {
+                return defaultItemMultiSelectionMode(e);
+              }
+              return widget.customItemMultiSelectionMode!(
+                  e, _itemAsString(e), removeItem);
+            }).toList(),
           ),
         );
       }
@@ -783,7 +795,11 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
 
   @override
   void dispose() {
-    _popupStateKey.currentState?.closePopup();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _popupStateKey.currentState?.closePopup();
+      }
+    });
     super.dispose();
   }
 
