@@ -550,31 +550,16 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
   ///the goal of this function is to return a position of the popup
   ///taking in consideration menu button width and popup constraints
   RelativeRect _position(RenderBox dropdown, RenderBox overlay) {
-    var menuMinWidth = widget.popupProps.constraints.minWidth;
-    var menuMaxWidth = widget.popupProps.constraints.maxWidth;
-
-    var menuMinHeight = widget.popupProps.constraints.minHeight;
-    var menuMaxHeight = widget.popupProps.constraints.maxHeight;
-
     var menuWidth = dropdown.size.width;
     var menuHeight = 350.0;
 
-    if (menuMinWidth > 0) {
-      menuWidth = menuMinWidth;
-    }
-    if (menuMaxWidth > 0 && menuMaxWidth < menuWidth) {
-      menuWidth = menuMaxWidth;
-    }
+    menuWidth = widget.popupProps.constraints.constrainWidth(menuWidth);
+
     if (widget.mode == Mode.custom && dropdown.size.width < 64) {
       menuWidth = 180;
     }
 
-    if (menuMinHeight > 0) {
-      menuHeight = menuMinHeight;
-    }
-    if (menuMaxHeight > 0 && menuMaxHeight < menuHeight) {
-      menuHeight = menuMaxHeight;
-    }
+    menuHeight = widget.popupProps.constraints.constrainHeight(menuHeight);
 
     return getPosition(dropdown, overlay, Size(menuWidth, menuHeight),
         widget.popupProps.menuProps.align);
