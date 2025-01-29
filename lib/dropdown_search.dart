@@ -59,6 +59,12 @@ typedef BeforeChangeMultiSelection<T> = Future<bool?> Function(
     List<T> prevItems, List<T> nextItems);
 typedef FavoriteItemsBuilder<T> = Widget Function(
     BuildContext context, T item, bool isSelected);
+typedef CustomItemMultiSelectionModeBuilder<T> = Widget Function(
+  BuildContext context,
+  T? item,
+  String itemAsString,
+  void Function(T value) removeItem,
+);
 typedef ValidationMultiSelectionBuilder<T> = Widget Function(
   BuildContext context,
   List<T> items,
@@ -111,11 +117,8 @@ class DropdownSearch<T> extends StatefulWidget {
   ///```
   final ScrollProps? selectedItemsScrollProps;
 
-  final Widget Function(
-    T item,
-    String itemAsString,
-    ValueChanged<T> removeItem,
-  )? customItemMultiSelectionModeBuilder;
+  final CustomItemMultiSelectionModeBuilder<T>?
+      customItemMultiSelectionModeBuilder;
 
   ///customize the fields the be shown
   final DropdownSearchItemAsString<T>? itemAsString;
@@ -388,7 +391,7 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
                 return defaultItemMultiSelectionMode(e);
               }
               return widget.customItemMultiSelectionModeBuilder!(
-                  e, _itemAsString(e), removeItem);
+                  context, e, _itemAsString(e), removeItem);
             }).toList(),
           ),
         );
