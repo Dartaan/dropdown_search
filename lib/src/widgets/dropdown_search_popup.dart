@@ -451,31 +451,37 @@ class DropdownSearchPopupState<T> extends State<DropdownSearchPopup<T>> {
   }
 
   Widget _itemWidgetSingleSelection(T item) {
-    if (widget.popupProps.itemBuilder != null) {
-      var w = widget.popupProps.itemBuilder!(
-        context,
-        item,
-        _isDisabled(item),
-        !widget.popupProps.showSelectedItems ? false : _isSelectedItem(item),
-      );
+    final w = _itemWidgetLayout(item);
 
-      if (widget.popupProps.interceptCallBacks) return w;
+    if (widget.popupProps.interceptCallBacks) return w;
 
-      return CustomInkWell(
-        clickProps: widget.popupProps.itemClickProps,
-        onTap: _isDisabled(item) ? null : () => _handleSelectedItem(item),
-        child: IgnorePointer(child: w),
-      );
-    } else {
+    return CustomInkWell(
+      clickProps: widget.popupProps.itemClickProps,
+      onTap: _isDisabled(item) ? null : () => _handleSelectedItem(item),
+      child: IgnorePointer(
+        ignoring: widget.popupProps.itemIgnorePointers,
+        child: w,
+      ),
+    );
+  }
+
+  Widget _itemWidgetLayout(T item) {
+    if (widget.popupProps.itemBuilder == null) {
       return ListTile(
         enabled: !_isDisabled(item),
         title: Text(_selectedItemAsString(item)),
         selected: !widget.popupProps.showSelectedItems
             ? false
             : _isSelectedItem(item),
-        onTap: _isDisabled(item) ? null : () => _handleSelectedItem(item),
       );
     }
+
+    return widget.popupProps.itemBuilder!(
+      context,
+      item,
+      _isDisabled(item),
+      !widget.popupProps.showSelectedItems ? false : _isSelectedItem(item),
+    );
   }
 
   Widget _itemWidgetMultiSelection(T item) {
@@ -488,22 +494,24 @@ class DropdownSearchPopupState<T> extends State<DropdownSearchPopup<T>> {
         },
         interceptCallBacks: widget.popupProps.interceptCallBacks,
         textDirection: widget.popupProps.textDirection,
-        layout: (context, isChecked) => _itemWidgetSingleSelection(item),
+        layout: (context, isChecked) => _itemWidgetLayout(item),
         isChecked: _isSelectedItem(item),
         isDisabled: _isDisabled(item),
         onChanged: (c) => _handleSelectedItem(item),
         checkBoxPosition: widget.popupProps.checkBoxPosition,
+        itemIgnorePointers: widget.popupProps.itemIgnorePointers,
       );
     } else {
       return CheckBoxWidget(
         clickProps: widget.popupProps.itemClickProps,
         textDirection: widget.popupProps.textDirection,
         interceptCallBacks: widget.popupProps.interceptCallBacks,
-        layout: (context, isChecked) => _itemWidgetSingleSelection(item),
+        layout: (context, isChecked) => _itemWidgetLayout(item),
         isChecked: _isSelectedItem(item),
         isDisabled: _isDisabled(item),
         onChanged: (c) => _handleSelectedItem(item),
         checkBoxPosition: widget.popupProps.checkBoxPosition,
+        itemIgnorePointers: widget.popupProps.itemIgnorePointers,
       );
     }
   }

@@ -13,7 +13,8 @@ class CheckBoxWidget extends StatefulWidget {
   final ValueChanged<bool?>? onChanged;
   final bool interceptCallBacks;
   final TextDirection textDirection;
-  final CheckBoxPosition? checkBoxPosition;
+  final CheckBoxPosition checkBoxPosition;
+  final bool itemIgnorePointers;
 
   CheckBoxWidget({
     super.key,
@@ -25,6 +26,7 @@ class CheckBoxWidget extends StatefulWidget {
     this.interceptCallBacks = false,
     this.textDirection = TextDirection.ltr,
     this.checkBoxPosition = CheckBoxPosition.end,
+    this.itemIgnorePointers = true,
     required this.onChanged,
   });
 
@@ -61,8 +63,12 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
               : SizedBox.shrink();
           final checkbox = widget.checkBox != null
               ? widget.checkBox!(context, v == true)
-              : Checkbox(
-                  value: v, onChanged: widget.isDisabled ? null : (b) {});
+              : IgnorePointer(
+                  child: Checkbox(
+                    value: v,
+                    onChanged: widget.isDisabled ? null : (b) {},
+                  ),
+                );
           List<Widget> children =
               widget.checkBoxPosition == CheckBoxPosition.start
                   ? [checkbox, layout]
@@ -84,7 +90,9 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
                       isCheckedNotifier.value = !v;
                       if (widget.onChanged != null) widget.onChanged!(v);
                     },
-              child: IgnorePointer(child: ExcludeFocus(child: w)),
+              child: IgnorePointer(
+                  ignoring: widget.itemIgnorePointers,
+                  child: ExcludeFocus(child: w)),
             );
           }
         },
