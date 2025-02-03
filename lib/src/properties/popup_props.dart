@@ -12,6 +12,8 @@ class PopupProps<T> {
   /// custom UI for the item
   final DropdownSearchPopupItemBuilder<T>? itemBuilder;
 
+  final bool itemIgnorePointers;
+
   /// object that passes all props to search field
   final TextFieldProps searchFieldProps;
 
@@ -111,6 +113,7 @@ class PopupProps<T> {
     this.onDismissed,
     this.emptyBuilder,
     this.itemBuilder,
+    this.itemIgnorePointers = true,
     this.errorBuilder,
     this.loadingBuilder,
     this.showSelectedItems = false,
@@ -138,6 +141,7 @@ class PopupProps<T> {
     this.onDismissed,
     this.emptyBuilder,
     this.itemBuilder,
+    this.itemIgnorePointers = true,
     this.errorBuilder,
     this.loadingBuilder,
     this.showSelectedItems = false,
@@ -168,6 +172,7 @@ class PopupProps<T> {
     this.onDismissed,
     this.emptyBuilder,
     this.itemBuilder,
+    this.itemIgnorePointers = true,
     this.errorBuilder,
     this.loadingBuilder,
     this.showSelectedItems = false,
@@ -202,6 +207,7 @@ class PopupProps<T> {
     this.onDismissed,
     this.emptyBuilder,
     this.itemBuilder,
+    this.itemIgnorePointers = true,
     this.errorBuilder,
     this.loadingBuilder,
     this.showSelectedItems = false,
@@ -232,6 +238,7 @@ class PopupProps<T> {
     this.onDismissed,
     this.emptyBuilder,
     this.itemBuilder,
+    this.itemIgnorePointers = true,
     this.errorBuilder,
     this.loadingBuilder,
     this.showSelectedItems = false,
@@ -277,6 +284,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     super.disableFilter,
     super.cacheItems,
     super.itemBuilder,
+    super.itemIgnorePointers = true,
     super.disabledItemFn,
     super.showSearchBox,
     super.searchFieldProps = const TextFieldProps(),
@@ -320,6 +328,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     super.onDismissed,
     super.emptyBuilder,
     super.itemBuilder,
+    super.itemIgnorePointers = true,
     super.errorBuilder,
     super.loadingBuilder,
     super.showSelectedItems = false,
@@ -353,6 +362,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     super.onDismissed,
     super.emptyBuilder,
     super.itemBuilder,
+    super.itemIgnorePointers = true,
     super.errorBuilder,
     super.loadingBuilder,
     super.showSelectedItems = false,
@@ -390,6 +400,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     super.onDismissed,
     super.emptyBuilder,
     super.itemBuilder,
+    super.itemIgnorePointers = true,
     super.errorBuilder,
     super.loadingBuilder,
     super.showSelectedItems = false,
@@ -416,6 +427,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
     super.cacheItems,
     super.fit = FlexFit.tight,
     super.itemBuilder,
+    super.itemIgnorePointers = true,
     super.disabledItemFn,
     super.showSearchBox,
     super.searchFieldProps = const TextFieldProps(),
@@ -454,6 +466,7 @@ class PopupPropsMultiSelection<T> extends PopupProps<T> {
           disableFilter: popupProps.disableFilter,
           cacheItems: popupProps.cacheItems,
           itemBuilder: popupProps.itemBuilder,
+          itemIgnorePointers: popupProps.itemIgnorePointers,
           listViewProps: popupProps.listViewProps,
           loadingBuilder: popupProps.loadingBuilder,
           modalBottomSheetProps: popupProps.modalBottomSheetProps,
